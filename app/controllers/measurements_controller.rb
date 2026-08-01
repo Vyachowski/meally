@@ -3,6 +3,7 @@ class MeasurementsController < ApplicationController
     @weight = Current.user.measurements.new(kind: "weight")
     @waist = Current.user.measurements.new(kind: "waist")
     load_collections
+    @chart = WeightChart.new(@weights)
   end
 
   def create

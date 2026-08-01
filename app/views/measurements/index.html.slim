@@ -4,6 +4,7 @@ article.auth
   section
     h2 Вес
     = render "form", measurement: @weight
+    = render "chart", chart: @chart
     ul id="weight_measurements"
       = render @weights
 

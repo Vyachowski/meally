@@ -4,3 +4,7 @@
 
 = turbo_stream.replace "#{kind}_form" do
   = render "form", measurement: Measurement.new(kind: kind)
+
+- if kind == "weight"
+  = turbo_stream.replace "weight_chart" do
+    = render "chart", chart: WeightChart.new(Current.user.measurements.weight)

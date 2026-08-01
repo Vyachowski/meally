@@ -1,0 +1,10 @@
+div id="weight_chart"
+  - if chart.points?
+    svg viewBox="0 0 320 160" width="100%" role="img" aria-label="График веса" style="max-width:100%;height:auto"
+      - if chart.average_points.size > 1
+        polyline fill="none" stroke="var(--pico-primary, #396cd8)" stroke-width="2" points=chart.average_points.map { |p| "#{p.x},#{p.y}" }.join(" ")
+      - chart.raw_points.each do |p|
+        circle cx=p.x cy=p.y r="3" fill="var(--pico-muted-color, #888)"
+  - else
+    p
+      small Недостаточно данных для графика.
