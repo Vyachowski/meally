@@ -8,3 +8,8 @@
  *
  * Consider organizing styles into separate files for maintainability.
  */
+
+.auth {
+  max-width: 420px;
+  margin: 4rem auto;
+}
