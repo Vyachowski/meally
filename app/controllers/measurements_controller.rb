@@ -1,7 +1,8 @@
 class MeasurementsController < ApplicationController
   def index
-    @measurement = Current.user.measurements.new(kind: "weight")
-    @weights = Current.user.measurements.weight.order(measured_on: :desc)
+    @weight = Current.user.measurements.new(kind: "weight")
+    @waist = Current.user.measurements.new(kind: "waist")
+    load_collections
   end
 
   def create
@@ -16,11 +17,11 @@ class MeasurementsController < ApplicationController
       respond_to do |format|
         format.turbo_stream do
           render turbo_stream: turbo_stream.replace(
-            "weight_form", partial: "measurements/form", locals: { measurement: @measurement }
+            "#{@measurement.kind}_form", partial: "measurements/form", locals: { measurement: @measurement }
           )
         end
         format.html do
-          @weights = Current.user.measurements.weight.order(measured_on: :desc)
+          load_collections
           render :index, status: :unprocessable_entity
         end
       end
@@ -28,6 +29,11 @@ class MeasurementsController < ApplicationController
   end
 
   private
+
+  def load_collections
+    @weights = Current.user.measurements.weight.order(measured_on: :desc)
+    @waists = Current.user.measurements.waist.order(measured_on: :desc)
+  end
 
   def measurement_params
     params.require(:measurement).permit(:kind, :value, :measured_on)

@@ -1,7 +1,16 @@
 article.auth
-  h1 Вес
+  h1 Замеры
 
-  = render "form", measurement: @measurement
+  section
+    h2 Вес
+    = render "form", measurement: @weight
+    ul id="weight_measurements"
+      = render @weights
 
-  ul#measurements
-    = render @weights
+  section
+    h2 Талия
+    = render "form", measurement: @waist
+    p
+      small Натощак, утром, раз в неделю.
+    ul id="waist_measurements"
+      = render @waists

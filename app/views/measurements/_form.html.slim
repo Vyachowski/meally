@@ -1,15 +1,17 @@
-div id="weight_form"
+- kind = measurement.kind
+- range = Measurement::RANGES[kind]
+div id="#{kind}_form"
   = form_with model: measurement, url: measurements_path do |f|
     - if measurement.errors.any?
       ul style="color:red"
         - measurement.errors.full_messages.each do |msg|
           li = msg
 
-    = f.hidden_field :kind, value: "weight"
+    = f.hidden_field :kind
 
     label
-      | Вес, кг
-      = f.number_field :value, step: 0.1, min: 30, max: 300, inputmode: "decimal", required: true, autofocus: true
+      = measurement_label(kind)
+      = f.number_field :value, step: 0.1, min: range.min, max: range.max, inputmode: "decimal", required: true
 
     label
       | Дата

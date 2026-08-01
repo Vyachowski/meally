@@ -3,5 +3,5 @@ p Signed in as #{Current.user.email_address}
 p
   = link_to "Профиль", edit_profile_path
 p
-  = link_to "Вес", measurements_path
+  = link_to "Замеры", measurements_path
 = button_to "Sign out", session_path, method: :delete

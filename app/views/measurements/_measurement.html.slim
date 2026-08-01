@@ -1,2 +1,2 @@
 li id=dom_id(measurement)
-  = "#{measurement.measured_on.strftime('%d.%m.%Y')} — #{measurement.value} кг"
+  = "#{measurement.measured_on.strftime('%d.%m.%Y')} — #{measurement.value} #{measurement_unit(measurement.kind)}"
