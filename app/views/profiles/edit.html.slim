@@ -1,0 +1,26 @@
+article.auth
+  h1 Профиль
+
+  - if @user.errors.any?
+    ul style="color:red"
+      - @user.errors.full_messages.each do |msg|
+        li = msg
+
+  = form_with model: @user, url: profile_path, method: :patch do |f|
+    label
+      | Дата рождения
+      = f.date_field :birth_date
+
+    label
+      | Пол
+      = f.select :sex, [["Мужской", "male"], ["Женский", "female"]], include_blank: "—"
+
+    label
+      | Рост, см
+      = f.number_field :height_cm, min: 120, max: 250, step: 1
+
+    label
+      | Активность
+      = f.select :activity_factor, activity_options, include_blank: "—"
+
+    = f.submit "Сохранить"
