@@ -1,0 +1,18 @@
+div id="weight_form"
+  = form_with model: measurement, url: measurements_path do |f|
+    - if measurement.errors.any?
+      ul style="color:red"
+        - measurement.errors.full_messages.each do |msg|
+          li = msg
+
+    = f.hidden_field :kind, value: "weight"
+
+    label
+      | Вес, кг
+      = f.number_field :value, step: 0.1, min: 30, max: 300, inputmode: "decimal", required: true, autofocus: true
+
+    label
+      | Дата
+      = f.date_field :measured_on, value: (measurement.measured_on || Date.current)
+
+    = f.submit "Сохранить"

@@ -1,0 +1,5 @@
+= turbo_stream.prepend "measurements" do
+  = render @measurement
+
+= turbo_stream.replace "weight_form" do
+  = render "form", measurement: Measurement.new(kind: "weight")

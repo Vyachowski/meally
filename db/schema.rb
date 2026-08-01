@@ -10,7 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_08_01_125634) do
+ActiveRecord::Schema[8.1].define(version: 2026_08_01_130343) do
+  create_table "measurements", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.string "kind", null: false
+    t.date "measured_on", null: false
+    t.datetime "updated_at", null: false
+    t.integer "user_id", null: false
+    t.decimal "value", precision: 5, scale: 1, null: false
+    t.index ["user_id", "kind", "measured_on"], name: "index_measurements_on_user_id_and_kind_and_measured_on", unique: true
+    t.index ["user_id"], name: "index_measurements_on_user_id"
+  end
+
   create_table "sessions", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.string "ip_address"
@@ -32,5 +43,6 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_01_125634) do
     t.index ["email_address"], name: "index_users_on_email_address", unique: true
   end
 
+  add_foreign_key "measurements", "users"
   add_foreign_key "sessions", "users"
 end

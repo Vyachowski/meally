@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   resource :session
   resource :profile, only: %i[edit update]
+  resources :measurements, only: %i[index create]
   resources :passwords, param: :token
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
