@@ -57,6 +57,9 @@ end
 group :development do
   # Use console on exceptions pages [https://github.com/rails/web-console]
   gem "web-console"
+
+  # Git hook manager. Lints commit messages against Conventional Commits [https://github.com/sds/overcommit]
+  gem "overcommit", require: false
 end
 
 group :test do

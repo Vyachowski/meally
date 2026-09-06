@@ -1,0 +1,29 @@
+# Git hook manager. Install with `overcommit --install` (writes to .git/hooks).
+# The config is signed: after editing this file, run `overcommit --sign`.
+#
+# Rules: Conventional Commits — https://www.conventionalcommits.org/
+
+CommitMsg:
+  # The check this whole setup exists for.
+  MessageFormat:
+    enabled: true
+    pattern: '\A(?:(?:Merge|Revert|fixup!|squash!)\s|(?:build|chore|ci|docs|feat|fix|perf|refactor|revert|style|test)(?:\([a-z0-9._\/-]+\))?!?: [^\n]+)'
+    expected_pattern_message: |-
+      <type>(<scope>)?(!)?: <subject>
+
+      type   build, chore, ci, docs, feat, fix, perf, refactor, revert, style, test
+      scope  optional, lowercase
+      !      optional, marks a breaking change
+      Housekeeping messages (Merge, Revert, fixup!, squash!) are skipped.
+    sample_message: 'feat(measurements): add waist entry form'
+
+  # Requires a capitalised subject, which contradicts Conventional Commits —
+  # there the subject starts with a lowercase type.
+  CapitalizedSubject:
+    enabled: false
+
+  # 60 is too tight: the subject also carries the type and scope prefix.
+  TextWidth:
+    enabled: true
+    max_subject_width: 72
+    max_body_width: 72
