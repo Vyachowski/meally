@@ -50,6 +50,9 @@ group :development, :test do
 
   # Omakase Ruby styling [https://github.com/rails/rubocop-rails-omakase/]
   gem "rubocop-rails-omakase", require: false
+
+  # Loads .env into ENV so Rails sees the same vars Docker Compose does
+  gem "dotenv-rails"
 end
 
 group :development do
