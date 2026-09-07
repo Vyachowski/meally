@@ -103,3 +103,64 @@ jobs:
           # RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
           # REDIS_URL: redis://localhost:6379/0
         run: bin/rails db:test:prepare test
+
+# -----------------------------------------------------------------------------
+# DISABLED 2026-09-07. Re-enable together with the first system test.
+#
+# Why: Rails creates test/application_system_test_case.rb lazily — on the first
+# `rails g system_test` or `rails g scaffold`. A fresh app does not have it, so
+# `bin/rails test:system` fails with:
+#   cannot load such file -- test/system (LoadError)
+# The job was red from the very first push, and a permanently red job trains you
+# to ignore CI.
+#
+# To re-enable: write the first system test (the generator will create
+# application_system_test_case.rb for you), then uncomment the block below.
+# -----------------------------------------------------------------------------
+
+#  system-test:
+#    runs-on: ubuntu-latest
+#
+#    services:
+#      postgres:
+#        image: postgres:18
+#        env:
+#          POSTGRES_USER: postgres
+#          POSTGRES_PASSWORD: postgres
+#        ports:
+#          - 5432:5432
+#        options: --health-cmd="pg_isready" --health-interval=10s --health-timeout=5s --health-retries=3
+#
+#      # redis:
+#      #   image: valkey/valkey:8
+#      #   ports:
+#      #     - 6379:6379
+#      #   options: --health-cmd "redis-cli ping" --health-interval 10s --health-timeout 5s --health-retries 5
+#
+#    steps:
+#      - name: Install packages
+#        run: sudo apt-get update && sudo apt-get install --no-install-recommends -y libpq-dev libvips
+#
+#      - name: Checkout code
+#        uses: actions/checkout@v6
+#
+#      - name: Set up Ruby
+#        uses: ruby/setup-ruby@v1
+#        with:
+#          bundler-cache: true
+#
+#      - name: Run System Tests
+#        env:
+#          RAILS_ENV: test
+#          DATABASE_URL: postgres://postgres:postgres@localhost:5432
+#          # RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
+#          # REDIS_URL: redis://localhost:6379/0
+#        run: bin/rails db:test:prepare test:system
+#
+#      - name: Keep screenshots from failed system tests
+#        uses: actions/upload-artifact@v4
+#        if: failure()
+#        with:
+#          name: screenshots
+#          path: ${{ github.workspace }}/tmp/screenshots
+#          if-no-files-found: ignore
