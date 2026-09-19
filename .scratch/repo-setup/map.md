@@ -81,6 +81,9 @@ agents read.
   four ADRs (Railway, secrets, Solid database URLs, no CSS framework), the
   operational material to `docs/deployment.md`, the auth plan to a feature spec,
   sections 5 and 8 discarded, and `dev-docs/` retired outright in ticket 07.
+- [Write the backfill ADRs](issues/04-backfill-adrs.md) — `docs/adr/0001`–`0004`
+  cover Railway, secrets as environment variables, the derived Solid database
+  URLs, and the absent CSS framework, each dated to when it was decided.
 
 ## Not yet specified
 

@@ -1,7 +1,7 @@
 # Write the backfill ADRs
 
 Type: task
-Status: open
+Status: resolved
 Blocked by: 03
 Map: ../map.md
 
@@ -33,3 +33,36 @@ Use the format in the `domain-modeling` skill's `ADR-FORMAT.md`, numbered from
 
 These record decisions already shipped, so each states its status as accepted and
 is dated to when the decision was actually made, not to today.
+
+## Answer
+
+Resolved 2026-09-19. Four ADRs written in `docs/adr/`, each dated to when the
+decision was actually taken rather than to today, and each readable without the
+spec:
+
+| ADR | Decision | Dated |
+|---|---|---|
+| [0001](../../../docs/adr/0001-deploy-to-railway.md) | Deploy to Railway | 2026-09-06 |
+| [0002](../../../docs/adr/0002-secrets-as-environment-variables.md) | Secrets in environment variables, not credentials | 2026-09-06 |
+| [0003](../../../docs/adr/0003-derive-solid-database-urls.md) | Derive the Solid database URLs from `DATABASE_URL` | 2026-09-07 |
+| [0004](../../../docs/adr/0004-no-css-framework.md) | No CSS framework | 2026-09-06 |
+
+Dates come from the commits that carried each decision — `6a8aadf` for Railway
+and the Kamal removal, `23d5b2f` for the Solid URLs — and from the spec's own
+draft date for the two that left no single commit.
+
+Each keeps only the optional sections that earn their place, per the format:
+
+- **0002** carries Consequences because of the standing obligation it creates —
+  production secrets exist only in the Railway dashboard, so a copy must be kept
+  in a password manager.
+- **0003** carries Consequences because its failure mode is silent: a green
+  deploy that dies at the first cache write or enqueued job, not at boot. It also
+  records all three empirical findings, since each one rules out a
+  simplification a future reader would otherwise attempt.
+- **0004** carries Considered Options, which is the whole reason it exists — four
+  alternatives rejected for specific reasons that would otherwise be
+  re-researched.
+
+No index file was added to `docs/adr/`. Four files sorted by number need no
+table of contents, and an index is another thing to forget to update.
