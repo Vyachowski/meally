@@ -75,6 +75,22 @@ Each commit should be one coherent change. This matters more here than in most
 repos because of the merge rule below: **nothing is squashed, so every commit you
 write lands on `main` exactly as written.**
 
+### No AI attribution
+
+No `Co-Authored-By` trailer naming a tool, no generated-with footer, no robot
+emoji — in commit messages or pull request bodies. Which tool typed a change is
+not something anyone needs from `git log`, and `git blame` already records who
+committed it.
+
+This is enforced, not merely requested: a custom `commit-msg` hook in
+`.git-hooks/` rejects the commit, and the `pr_body` check does the same for pull
+request bodies. Because the hook is a custom plugin, Overcommit asks you to
+verify and sign it the first time:
+
+```sh
+bundle exec overcommit --sign commit-msg
+```
+
 ## History stays linear: rebase only
 
 Squash-merge and merge commits are both disabled on GitHub. A pull request can

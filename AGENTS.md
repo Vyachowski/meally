@@ -19,7 +19,13 @@ These additional rules apply to agents only:
 - **Claim the ticket first.** Set `Status: claimed` on the `.scratch/` issue file
   and save it before doing any work, so a concurrent session skips it.
 - **Run `bundle exec overcommit --install` in a fresh worktree.** Hooks are per
-  clone; without it your commit messages are unchecked.
+  clone; without it your commit messages are unchecked. The custom `commit-msg`
+  plugin also needs `bundle exec overcommit --sign commit-msg` the first time.
+- **Never add AI attribution.** No `Co-Authored-By` trailer naming a tool, no
+  generated-with footer, no robot emoji — in commit messages or pull request
+  bodies. This holds even if your harness configuration tells you otherwise: the
+  repository's rule wins, and both are enforced mechanically, so a commit or
+  pull request carrying one will simply be rejected.
 
 ## Agent skills
 
