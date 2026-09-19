@@ -51,8 +51,9 @@ agents read.
   is shared history that a future reader can follow, not private scratch.
   `dev-docs/` and `.claude/worktrees/` stay ignored.
 - **No AI attribution.** No `Co-Authored-By` trailer naming a tool, no
-  generated-with footer in a pull request body. In effect from 2026-09-19; the
-  21 commits already on `main` that carry one are left alone. See ticket 10.
+  generated-with footer in a pull request body. In effect from 2026-09-19, to be
+  enforced mechanically rather than by prose, and the 21 commits already on
+  `main` get rewritten and force-pushed with lease. See ticket 10.
 - **No hotfix exception.** Every change goes through a branch and a PR,
   including urgent ones. The carve-out is what erodes the policy, and this app
   has no paging users.
