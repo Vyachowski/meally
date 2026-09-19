@@ -1,0 +1,30 @@
+name: PR hygiene
+
+# The commit-msg hook in .git-hooks/ catches AI attribution in commit messages,
+# but hooks are per clone and cannot see a pull request body. This closes that
+# gap: it is a required check, so a body carrying attribution cannot be merged.
+
+on:
+  pull_request:
+    types: [opened, edited, reopened, synchronize]
+
+permissions:
+  contents: read
+
+jobs:
+  pr_body:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Reject AI attribution in the pull request body
+        # The body goes through the environment rather than being interpolated
+        # into the script: it is attacker-controlled text and would otherwise be
+        # a shell injection.
+        env:
+          BODY: ${{ github.event.pull_request.body }}
+        run: |
+          if printf '%s' "$BODY" | grep -qiE 'co-authored-by:.*(claude|copilot|cursor|chatgpt|openai|gemini|codex|devin|aider)|generated (with|by).*(claude|copilot|cursor|chatgpt)|🤖'; then
+            echo "::error::The pull request body contains AI attribution. Remove the trailer, the generated-with footer, or the robot emoji."
+            exit 1
+          fi
+          echo "No AI attribution found."
