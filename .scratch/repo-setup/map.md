@@ -16,8 +16,11 @@ Reached when: a direct push to `main` is refused by GitHub, a new contributor
 ## Notes
 
 **Domain.** Meally — a Rails 8.1 app, single developer plus coding agents,
-deployed to Railway. Minitest, Slim, importmap, Pico CSS, Postgres in Docker
-locally.
+deployed to Railway. Minitest, importmap, Hotwire, ERB views, Postgres in Docker
+locally. The application itself is still a bare skeleton: `app/` holds only the
+four `Application*` base classes and three layouts, and everything in the log
+before `a0212ff chore: delete all files` is gone. There is no CSS framework by
+decision, and no Slim — both appear in the old history only.
 
 **This map carries execution.** Unlike the wayfinder default, tickets here
 produce commits, not just decisions — the destination *is* a change made in
@@ -74,12 +77,13 @@ agents read.
 - [Where the developer-flow rules live](issues/02-flow-doc-location.md) —
   `CONTRIBUTING.md` is the single source of truth for the shared rules;
   `AGENTS.md` carries only agent-only addenda plus an instruction to read it.
+- [Sort `dev-docs/spec.md` into its destinations](issues/03-sort-the-spec.md) —
+  four ADRs (Railway, secrets, Solid database URLs, no CSS framework), the
+  operational material to `docs/deployment.md`, the auth plan to a feature spec,
+  sections 5 and 8 discarded, and `dev-docs/` retired outright in ticket 07.
 
 ## Not yet specified
 
-- **What happens to `dev-docs/` once drained.** Delete the directory, or keep it
-  as an ignored private scratchpad for thinking-in-Russian. Depends on how much
-  of `spec.md` survives the sort in ticket 03.
 - **Whether `docs/agents/*.md` needs revising** once the flow doc exists — the
   three scaffolded files describe conventions that the flow doc may restate or
   contradict.
