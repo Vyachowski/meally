@@ -101,6 +101,9 @@ agents read.
 - [No AI attribution in commits or pull requests](issues/10-no-ai-attribution.md)
   — enforced by a custom `commit-msg` plugin and the required `pr_body` check,
   not by prose; the existing 21 commits are left as they are.
+- [Retire `dev-docs/`](issues/07-retire-dev-docs.md) — deleted along with its
+  `.gitignore` rule, after tracing every distinctive fact in the old spec to a
+  tracked file.
 
 ## Not yet specified
 

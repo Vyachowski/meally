@@ -35,8 +35,10 @@ avoids a second copy of the gems — the editor's LSP and rubocop need them on t
 host regardless. The production `Dockerfile` is unaffected; Railway builds it.
 
 Worth revisiting if a second developer joins, or if a native dependency turns
-painful on macOS. There is already a candidate: `image_processing` needs `vips`
-or `imagemagick`, and neither is installed.
+painful on macOS. The likeliest candidate arrives with Active Storage, whose
+`image_processing` gem needs `vips` or `imagemagick` — neither of which is
+installed here, which is part of why that gem was removed until it is actually
+needed.
 
 ## Tests
 
