@@ -18,8 +18,17 @@ jobs:
         with:
           bundler-cache: true
 
+      # Flags match config/ci.rb so the two invocations agree.
+      #
+      # Known flake: brakeman occasionally dies in its own version check —
+      # `Brakeman.ensure_latest: undefined method 'date' for nil` — when the
+      # call to rubygems.org comes back empty. The scan never starts, so a
+      # failure with that message in the log is not a security finding. Rerun
+      # the job. It is not understood why the check runs at all: `ensure_latest`
+      # is set only by `--ensure-latest`, which is not passed here, and this
+      # repo has no config/brakeman.yml.
       - name: Scan for common Rails security vulnerabilities using static analysis
-        run: bin/brakeman --no-pager
+        run: bin/brakeman --quiet --no-pager --exit-on-warn --exit-on-error
       
       - name: Scan for known security vulnerabilities in gems used
         run: bin/bundler-audit
@@ -115,7 +124,15 @@ jobs:
 # to ignore CI.
 #
 # To re-enable: write the first system test (the generator will create
-# application_system_test_case.rb for you), then uncomment the block below.
+# application_system_test_case.rb for you), then uncomment the block below —
+# and bump the action versions inside it first.
+#
+# Dependabot only updates actions it can see in live YAML. `actions/checkout`
+# stays current here because it also appears in the jobs above, but
+# `actions/upload-artifact` appears ONLY inside this comment, so Dependabot
+# treats it as not a dependency at all — it said exactly that when it closed
+# PR #1 — and the pin below is frozen at whatever it was on the day the job
+# was disabled.
 # -----------------------------------------------------------------------------
 
 #  system-test:
