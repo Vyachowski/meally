@@ -1,7 +1,7 @@
 # Move the authentication plan to a feature spec
 
 Type: task
-Status: open
+Status: resolved
 Blocked by: 03
 Map: ../map.md
 
@@ -42,3 +42,22 @@ Two open items travel with it and must not be silently dropped:
 
 This is a spec for future work, not a decision record — do not write it as an
 ADR.
+
+## Answer
+
+Resolved 2026-09-19. Written to `.scratch/authentication/spec.md`, in English,
+carrying `Status: needs-triage` per the repo's triage convention.
+
+Everything from spec section 4 survives: the two-layers distinction between the
+Rails session and Google OAuth, Google-only with the generator's password
+machinery deleted, the three pinned gems with `omniauth-rails_csrf_protection`
+marked mandatory rather than optional, the non-sensitive scopes point about brand
+verification, and deferred roles.
+
+Both open questions are kept as open questions rather than being quietly
+resolved: no fallback sign-in, and a redirect URI that depends on the unchosen
+domain. The second is cross-linked to `docs/deployment.md`, which records the
+same open item from the deployment side, so neither can be closed without the
+other being noticed.
+
+The secrets point links to ADR-0002 instead of restating the reasoning.

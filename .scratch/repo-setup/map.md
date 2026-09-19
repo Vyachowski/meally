@@ -50,6 +50,9 @@ agents read.
 - **`.scratch/` is tracked**, settled by landing the map on `main`: the tracker
   is shared history that a future reader can follow, not private scratch.
   `dev-docs/` and `.claude/worktrees/` stay ignored.
+- **No AI attribution.** No `Co-Authored-By` trailer naming a tool, no
+  generated-with footer in a pull request body. In effect from 2026-09-19; the
+  21 commits already on `main` that carry one are left alone. See ticket 10.
 - **No hotfix exception.** Every change goes through a branch and a PR,
   including urgent ones. The carve-out is what erodes the policy, and this app
   has no paging users.
@@ -88,18 +91,15 @@ agents read.
   — the README carries local setup only, the deployment doc takes the Railway
   variables, the `PORT=80` Thruster explanation and the environment model, and
   `CONTRIBUTING.md` gains the testing conventions.
+- [Move the authentication plan to a feature spec](issues/08-authentication-spec.md)
+  — `.scratch/authentication/spec.md`, with the mandatory CSRF-protection gem and
+  both open questions preserved as open.
 
 ## Not yet specified
 
 - **Whether `docs/agents/*.md` needs revising** once the flow doc exists — the
   three scaffolded files describe conventions that the flow doc may restate or
   contradict.
-- **Two definitions of CI.** `config/ci.rb` (run by `bin/ci`, the Rails 8.1
-  `ActiveSupport::ContinuousIntegration` runner) and `.github/workflows/ci.yml`
-  list overlapping but different steps — `config/ci.rb` also runs `bin/setup` and
-  replants the seeds, and neither file references the other. Whether to collapse
-  them into one source, and which one wins, is a real question once either
-  changes.
 - **CI required-checks drift.** The `system-test` job is commented out in
   `ci.yml` and returns with the first system test; whatever ruleset ticket 01
   writes will need updating then.
