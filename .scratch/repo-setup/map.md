@@ -40,6 +40,10 @@ agents read.
   `feat/waist-entry`, `fix/solid-db-urls`, `docs/adr-secrets`,
   `chore/dependabot-sweep`. A ticket number is appended only when the work comes
   from a `.scratch` ticket (`docs/02-flow-doc-location`).
+- **Branches are deleted on both sides after every merge.** Remote: GitHub's
+  `deleteBranchOnMerge`. Local: `fetch.prune = true` plus the canonical merge
+  command `gh pr merge <n> --rebase --delete-branch`. `pull.ff = only` is set so
+  a stale local `main` cannot grow a merge commit.
 - **No hotfix exception.** Every change goes through a branch and a PR,
   including urgent ones. The carve-out is what erodes the policy, and this app
   has no paging users.
@@ -59,7 +63,11 @@ agents read.
 
 <!-- one line per resolved ticket: gist + link -->
 
-_(none yet)_
+- [Lock down `main`](issues/01-lock-down-main.md) — `main` refuses direct pushes:
+  rebase-only merges, a ruleset requiring a PR plus all four CI checks, empty
+  bypass list. No local `PrePush` hook (one server-side enforcement point beats
+  two), and `strict_required_status_checks_policy` left off until parallel agent
+  PRs make it worth the rebase tax.
 
 ## Not yet specified
 
