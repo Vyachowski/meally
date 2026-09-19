@@ -1,11 +1,7 @@
 name: Dependabot auto-merge
 
-# Enables auto-merge on Dependabot pull requests that are not major bumps.
-# Auto-merge waits for the required checks in the `main` ruleset, so this
-# does not bypass CI — it only removes the final click once CI is green.
-#
-# Major bumps are deliberately excluded: they arrive as their own pull request
-# and are merged by hand.
+# Auto-merge waits for the required checks, so this does not bypass CI.
+# Majors are excluded on purpose and merged by hand.
 
 on: pull_request_target
 
@@ -19,10 +15,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # NOTE: this workflow deliberately does not check out the pull request's
-      # code. `pull_request_target` runs with write permissions against the base
-      # repository, so running code from the branch would be a privilege
-      # escalation. Metadata only.
+      # Never check out the branch: pull_request_target has write permissions.
       - name: Fetch Dependabot metadata
         id: metadata
         uses: dependabot/fetch-metadata@v3
