@@ -36,3 +36,7 @@
 
 # Docs
 /dev-docs/
+
+# Claude Code machine-local state (shared project config stays tracked).
+/.claude/worktrees/
+/.claude/settings.local.json
