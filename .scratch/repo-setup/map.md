@@ -84,6 +84,10 @@ agents read.
 - [Write the backfill ADRs](issues/04-backfill-adrs.md) — `docs/adr/0001`–`0004`
   cover Railway, secrets as environment variables, the derived Solid database
   URLs, and the absent CSS framework, each dated to when it was decided.
+- [Rewrite the README and write `docs/deployment.md`](issues/05-rewrite-readme.md)
+  — the README carries local setup only, the deployment doc takes the Railway
+  variables, the `PORT=80` Thruster explanation and the environment model, and
+  `CONTRIBUTING.md` gains the testing conventions.
 
 ## Not yet specified
 
