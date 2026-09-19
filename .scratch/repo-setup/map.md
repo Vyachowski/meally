@@ -95,6 +95,9 @@ agents read.
 - [Move the authentication plan to a feature spec](issues/08-authentication-spec.md)
   — `.scratch/authentication/spec.md`, with the mandatory CSRF-protection gem and
   both open questions preserved as open.
+- [Dependabot policy and the open PR backlog](issues/06-dependabot-policy.md) —
+  minor and patch grouped weekly and auto-merged behind the required checks,
+  majors read by hand; `image_processing` deleted rather than bumped.
 
 ## Not yet specified
 
