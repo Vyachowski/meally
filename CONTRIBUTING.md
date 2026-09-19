@@ -20,7 +20,7 @@ or every hook refuses to run.
 ## Every change goes through a pull request
 
 `main` is protected: a direct push is refused by GitHub, force-pushing and
-deletion are blocked, and four CI checks must pass before a merge.
+deletion are blocked, and five CI checks must pass before a merge.
 
 **There is no hotfix exception.** Urgent changes take the same path — the
 carve-out is what erodes the policy, and this app has no paging users.
@@ -153,36 +153,35 @@ Tests run in parallel across your cores, each worker with its own database
 
 ## CI must be green
 
-Four jobs run on every pull request, and all four are required to merge:
+GitHub Actions is the gate. Five checks run on every pull request and all five
+are required to merge:
 
-| Job | What it runs |
+| Check | What it runs |
 |---|---|
 | `lint` | rubocop |
 | `test` | `db:test:prepare test` against Postgres |
 | `scan_ruby` | brakeman + bundler-audit |
 | `scan_js` | importmap audit |
+| `pr_body` | rejects AI attribution in the pull request body |
 
-Run the whole suite locally before pushing:
+Locally, before pushing:
 
 ```sh
 docker compose up -d    # Postgres must be running first
-bin/ci
+bin/rubocop
+bin/rails test
 ```
 
-Without the database, `bin/ci` fails on its Setup and Seeds steps at
-`127.0.0.1:5434` while every other step still passes — a confusing result that
-looks like a broken checkout. `docker compose` also needs `DB_PASSWORD` set in
-`.env`; see `.env.example`.
+`docker compose` needs `DB_PASSWORD` set in `.env`; see `.env.example`.
 
-`bin/ci` is the Rails 8.1 runner configured in `config/ci.rb`. It covers
-everything the four jobs above do and a little more — it also runs `bin/setup`
-and replants the seeds — so a green `bin/ci` is a stronger signal than a green
-pull request. Individual steps still work on their own (`bin/rubocop`,
-`bin/rails test`) when you want a faster loop.
+### `bin/ci` is not used
 
-Note that `config/ci.rb` and `.github/workflows/ci.yml` are two separate
-definitions of what CI means, and nothing keeps them in step. Change one, check
-the other.
+Rails 8.1 also generates `bin/ci` and `config/ci.rb` — a local runner with its
+own list of steps. **Nothing here calls it**: no workflow, no hook. Its list is
+maintained separately from the workflow's and the two can disagree, so a green
+`bin/ci` promises nothing about a pull request.
+
+Treat it as unused until we decide to wire it up.
 
 A pull request does **not** have to be rebased onto the latest `main` to merge.
 That is a deliberate choice for a low-traffic repo; revisit it if concurrent

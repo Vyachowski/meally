@@ -104,12 +104,21 @@ agents read.
 - [Retire `dev-docs/`](issues/07-retire-dev-docs.md) — deleted along with its
   `.gitignore` rule, after tracing every distinctive fact in the old spec to a
   tracked file.
+- [One definition of CI](issues/09-one-definition-of-ci.md) — deferred on
+  purpose: `bin/ci` gates nothing, so the duplication costs nothing yet.
+  `CONTRIBUTING.md` corrected instead, since it was claiming `bin/ci` was the
+  stronger signal.
 
 ## Not yet specified
 
 - **Whether `docs/agents/*.md` needs revising** once the flow doc exists — the
   three scaffolded files describe conventions that the flow doc may restate or
   contradict.
+- **Collapsing `config/ci.rb` and the workflow into one definition.** Deferred in
+  [ticket 09](issues/09-one-definition-of-ci.md) rather than decided, because
+  `bin/ci` currently gates nothing. Sharpens the moment the drift bites: a
+  failure a green `bin/ci` let through, a red `bin/ci` that was a false alarm, or
+  a step added to one file and missed in the other.
 - **CI required-checks drift.** The `system-test` job is commented out in
   `ci.yml` and returns with the first system test; whatever ruleset ticket 01
   writes will need updating then.

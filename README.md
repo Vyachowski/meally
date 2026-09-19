@@ -50,12 +50,14 @@ Minitest, with fixtures. Tests run in parallel across your cores, each worker
 getting its own database (`meally_test-0`, `meally_test-1`, …), so Postgres must
 be up.
 
-To run everything CI runs — rubocop, the three security scans, the tests and a
-seeds replant:
+Linting, run separately:
 
 ```sh
-bin/ci
+bin/rubocop
 ```
+
+CI runs on GitHub Actions; see [`CONTRIBUTING.md`](CONTRIBUTING.md) for the
+checks that gate a merge. (`bin/ci` exists but is not used — same file.)
 
 ## Deployment
 
