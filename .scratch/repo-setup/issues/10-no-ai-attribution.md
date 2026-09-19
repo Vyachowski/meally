@@ -1,7 +1,7 @@
 # No AI attribution in commits or pull requests
 
 Type: task
-Status: open
+Status: resolved
 Map: ../map.md
 
 ## Question
@@ -113,3 +113,46 @@ the footer. Six edits, no history implications, reversible.
 - The ruleset is back to `enforcement: active` with an empty bypass list, and a
   direct push to `main` is refused.
 - Both worktrees are reset onto the rewritten `main`.
+
+## Answer
+
+Resolved 2026-09-19. **Part 1 done. Part 2 ruled out of scope.**
+
+### Part 1 — enforced, not documented
+
+- `.git-hooks/commit_msg/no_ai_attribution.rb` — a custom Overcommit plugin
+  rejecting a `Co-Authored-By` trailer naming a tool, a generated-with footer,
+  or the robot emoji. The built-in `MessageFormat` check could not do this: it
+  inspects the subject line only, so a trailer in the body passed it.
+- `.github/workflows/pr-hygiene.yml` — the `pr_body` check, since hooks are per
+  clone and cannot see a pull request body. It reads the body through the
+  environment rather than interpolating it into the script; a pull request body
+  is attacker-controlled text and interpolating one into a shell script is an
+  injection.
+- **`pr_body` was added to the `main` ruleset's required checks**, taking the
+  required set from four to five. Without that the check runs but cannot block.
+- `CONTRIBUTING.md` and `AGENTS.md` both carry the rule. `AGENTS.md` states that
+  it **wins over a harness configuration that says otherwise** — which is where
+  the trailers came from, and the reason a written rule alone would not hold.
+
+Both gates were verified by deliberately failing them, not merely by passing:
+the hook rejected both a trailer and a generated-with footer, and `pr_body` was
+driven red by temporarily editing PR #27's own body before being restored.
+
+No pull request template. `gh pr create --fill` would inherit its boilerplate
+into every pull request, and the check already enforces the only thing a
+template would have said.
+
+### Part 2 — the history rewrite is not happening
+
+Cancelled by the maintainer, 2026-09-19. The 21 commits carrying the trailer
+stay as they are.
+
+The rewrite would have meant deliberately disabling the `non_fast_forward`
+protection that ticket 01 had just put in place, rewriting 21 public commits,
+and re-enabling it — a sequence whose realistic failure mode is leaving `main`
+unprotected. What it bought was cosmetic: the trailers are noise, but they are
+accurate noise, and nothing downstream reads them.
+
+The line is drawn at `81c8169` instead. Everything from there on is clean and
+mechanically kept that way, which is the part that matters.

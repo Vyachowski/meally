@@ -98,6 +98,9 @@ agents read.
 - [Dependabot policy and the open PR backlog](issues/06-dependabot-policy.md) —
   minor and patch grouped weekly and auto-merged behind the required checks,
   majors read by hand; `image_processing` deleted rather than bumped.
+- [No AI attribution in commits or pull requests](issues/10-no-ai-attribution.md)
+  — enforced by a custom `commit-msg` plugin and the required `pr_body` check,
+  not by prose; the existing 21 commits are left as they are.
 
 ## Not yet specified
 
@@ -122,3 +125,11 @@ agents read.
   separate effort that depends on this one being settled first.
 - **Staging environment / Railway environments.** `dev-docs/spec.md` §2 defers a
   staging stand to "stage 1, friends"; the only user today is the author.
+- **Rewriting the 21 commits that carry an AI attribution trailer.** Ruled out
+  2026-09-19 while resolving
+  [ticket 10](issues/10-no-ai-attribution.md). Rewriting public history is a bad
+  trade here: it would mean deliberately disabling the `non_fast_forward`
+  protection from ticket 01 and re-enabling it afterwards, with the realistic
+  failure mode being `main` left unprotected — and the trailers threaten nothing.
+  The line is drawn at `81c8169`; everything after it is clean and mechanically
+  kept so.
