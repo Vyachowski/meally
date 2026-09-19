@@ -1,7 +1,7 @@
 # Rewrite the README and write `docs/deployment.md`
 
 Type: task
-Status: open
+Status: resolved
 Blocked by: 02, 03
 Map: ../map.md
 
@@ -44,3 +44,31 @@ spec sections 1 and 2:
 - Where each environment's database lives, and that there is no separate test
   stand — tests run locally and in GitHub Actions
 - That `RAILS_MASTER_KEY` is deliberately not set
+
+## Answer
+
+Resolved 2026-09-19. Three files written.
+
+**`README.md`** replaces the generated Rails placeholder. It covers only what a
+reader needs to run the thing: Ruby from `.ruby-version` (3.4.10), the three-line
+local start (`cp .env.example .env`, `docker compose up -d`, `bin/setup`), why
+the app is not itself in Docker, how to run the tests, and where deployment and
+the rules live. It states plainly that the project is early stage and the domain
+model is unsettled — true, and better said outright on a public repo than
+discovered.
+
+**`docs/deployment.md`** takes the operational Railway material: the variables
+table with the password-manager obligation, why `DATABASE_URL` must be a
+reference variable and is mandatory, why `PORT` is 80 (Thruster overwrites `PORT`
+for the Puma child, so Railway's injected value never arrives), a pointer to
+ADR-0003 for the four databases, the `RAILS_ENV`-vs-Railway-environment two-axes
+table, and why there is no staging stand yet. Rationale is linked, not repeated —
+the ADRs say why, this says what and how.
+
+**`CONTRIBUTING.md`** gains a Tests section from spec section 7: model and
+integration tests as the base, no controller tests, system tests only where a
+real browser is required, fixtures rather than FactoryBot with its known cost
+stated, and test-first for calculations but test-after for controllers and views.
+
+Checked: every relative link in the README and the deployment doc resolves to a
+file that exists.
