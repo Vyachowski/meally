@@ -83,6 +83,12 @@ agents read.
 - **Whether `docs/agents/*.md` needs revising** once the flow doc exists — the
   three scaffolded files describe conventions that the flow doc may restate or
   contradict.
+- **Two definitions of CI.** `config/ci.rb` (run by `bin/ci`, the Rails 8.1
+  `ActiveSupport::ContinuousIntegration` runner) and `.github/workflows/ci.yml`
+  list overlapping but different steps — `config/ci.rb` also runs `bin/setup` and
+  replants the seeds, and neither file references the other. Whether to collapse
+  them into one source, and which one wins, is a real question once either
+  changes.
 - **CI required-checks drift.** The `system-test` job is commented out in
   `ci.yml` and returns with the first system test; whatever ruleset ticket 01
   writes will need updating then.

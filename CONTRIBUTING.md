@@ -119,12 +119,27 @@ Four jobs run on every pull request, and all four are required to merge:
 | `scan_ruby` | brakeman + bundler-audit |
 | `scan_js` | importmap audit |
 
-Run them locally before pushing:
+Run the whole suite locally before pushing:
 
 ```sh
-bin/rubocop
-bin/rails test
+docker compose up -d    # Postgres must be running first
+bin/ci
 ```
+
+Without the database, `bin/ci` fails on its Setup and Seeds steps at
+`127.0.0.1:5434` while every other step still passes — a confusing result that
+looks like a broken checkout. `docker compose` also needs `DB_PASSWORD` set in
+`.env`; see `.env.example`.
+
+`bin/ci` is the Rails 8.1 runner configured in `config/ci.rb`. It covers
+everything the four jobs above do and a little more — it also runs `bin/setup`
+and replants the seeds — so a green `bin/ci` is a stronger signal than a green
+pull request. Individual steps still work on their own (`bin/rubocop`,
+`bin/rails test`) when you want a faster loop.
+
+Note that `config/ci.rb` and `.github/workflows/ci.yml` are two separate
+definitions of what CI means, and nothing keeps them in step. Change one, check
+the other.
 
 A pull request does **not** have to be rebased onto the latest `main` to merge.
 That is a deliberate choice for a low-traffic repo; revisit it if concurrent
