@@ -35,8 +35,9 @@ gem "bootsnap", require: false
 # Add HTTP asset caching/compression and X-Sendfile acceleration to Puma [https://github.com/basecamp/thruster/]
 gem "thruster", require: false
 
-# Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
-gem "image_processing", "~> 1.2"
+# Removed: image_processing (Active Storage variants). Nothing uses Active
+# Storage yet, and the gem needs vips or imagemagick, neither of which is
+# installed. Add it back — one line — when Active Storage actually lands.
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
