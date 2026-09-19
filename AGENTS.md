@@ -31,11 +31,9 @@ These additional rules apply to agents only:
 
 ### Issue tracker
 
-Issues and specs live as markdown files under `.scratch/<feature-slug>/` in this repo — there is no external tracker in use. See `docs/agents/issue-tracker.md`.
+Issues and specs live as markdown files under `.scratch/<slug>/` in this repo — there is no external tracker in use.
 
-### Triage labels
-
-The five canonical triage roles are used verbatim: `needs-triage`, `needs-info`, `ready-for-agent`, `ready-for-human`, `wontfix`, recorded as a `Status:` line in each issue file. See `docs/agents/triage-labels.md`.
+Every file carries a `Status:` line, and **it means two different things depending on the file**: wayfinder tickets use a lifecycle (`open` / `claimed` / `resolved`), while specs and ordinary issues use a triage role (`needs-triage`, `needs-info`, `ready-for-agent`, `ready-for-human`, `wontfix`). See `docs/agents/issue-tracker.md` for which applies where.
 
 ### Domain docs
 
