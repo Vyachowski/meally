@@ -1,4 +1,4 @@
-# Rewrite the README
+# Rewrite the README and write `docs/deployment.md`
 
 Type: task
 Status: open
@@ -25,3 +25,22 @@ already exist and are currently undocumented:
 
 Keep it to what a reader needs to run the thing. Rationale belongs in the ADRs
 from ticket 04 — the README says what and how, the ADRs say why.
+
+## Also: `docs/deployment.md`
+
+Ticket 03 routes the operational Railway material here rather than into the
+README, so that the README stays short enough to read end to end. Write it from
+spec sections 1 and 2:
+
+- The Railway variables table (`SECRET_KEY_BASE`, `DATABASE_URL` as a reference
+  variable rather than a copy, `PORT`, the Google OAuth pair when it arrives),
+  and the standing obligation to keep a copy in a password manager
+- **`PORT=80`** — Thruster listens on `HTTP_PORT` (default 80) and runs Puma on
+  `TARGET_PORT`, overwriting `PORT` for the child process, so Railway's injected
+  `PORT` never reaches Puma. Railway uses the variable for healthchecks and
+  routing, which is why it must be 80
+- `RAILS_ENV` and Railway environments are **different axes** — a Railway
+  `staging` environment would still run `RAILS_ENV=production`
+- Where each environment's database lives, and that there is no separate test
+  stand — tests run locally and in GitHub Actions
+- That `RAILS_MASTER_KEY` is deliberately not set

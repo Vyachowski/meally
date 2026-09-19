@@ -21,6 +21,12 @@ to learn and that a future reader would otherwise undo. The leading candidates:
   `url:`. All of that is empirically established and none of it is guessable.
 - **Railway over Kamal/VPS.** Cheap to state, and it explains why nine gems and
   `config/deploy.yml` disappeared from the history.
+- **No CSS framework.** Added by ticket 03 as a fourth backfill. Four
+  alternatives were named and rejected with specific reasons — Tailwind + daisyUI
+  ("technical debt at the start"), Web Awesome, Bootstrap's 226 KB CSS plus 78 KB
+  JS, and Pico CSS's dead maintainer — which is exactly the research a future
+  reader would otherwise repeat. The ~800-line retreat threshold and "keep logic
+  out of views" become its consequences.
 
 Use the format in the `domain-modeling` skill's `ADR-FORMAT.md`, numbered from
 `0001`. Each ADR must survive being read alone, without the spec.
