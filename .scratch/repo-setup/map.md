@@ -44,6 +44,9 @@ agents read.
   `deleteBranchOnMerge`. Local: `fetch.prune = true` plus the canonical merge
   command `gh pr merge <n> --rebase --delete-branch`. `pull.ff = only` is set so
   a stale local `main` cannot grow a merge commit.
+- **`.scratch/` is tracked**, settled by landing the map on `main`: the tracker
+  is shared history that a future reader can follow, not private scratch.
+  `dev-docs/` and `.claude/worktrees/` stay ignored.
 - **No hotfix exception.** Every change goes through a branch and a PR,
   including urgent ones. The carve-out is what erodes the policy, and this app
   has no paging users.
@@ -68,14 +71,12 @@ agents read.
   bypass list. No local `PrePush` hook (one server-side enforcement point beats
   two), and `strict_required_status_checks_policy` left off until parallel agent
   PRs make it worth the rebase tax.
+- [Where the developer-flow rules live](issues/02-flow-doc-location.md) —
+  `CONTRIBUTING.md` is the single source of truth for the shared rules;
+  `AGENTS.md` carries only agent-only addenda plus an instruction to read it.
 
 ## Not yet specified
 
-- **Is `.scratch/` tracked or ignored?** It is neither in `.gitignore` nor in
-  the repo today, so this map is the first thing to land there. `AGENTS.md`
-  calls it the issue tracker, which implies tracked — but `dev-docs/` and
-  `.claude/worktrees/` were both deliberately ignored, so the pattern is not
-  obvious. Sharpens once the flow doc decides who reads what.
 - **What happens to `dev-docs/` once drained.** Delete the directory, or keep it
   as an ignored private scratchpad for thinking-in-Russian. Depends on how much
   of `spec.md` survives the sort in ticket 03.

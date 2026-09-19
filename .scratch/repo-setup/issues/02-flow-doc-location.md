@@ -1,7 +1,7 @@
 # Where the developer-flow rules live
 
 Type: grilling
-Status: open
+Status: resolved
 Map: ../map.md
 
 ## Question
@@ -29,3 +29,34 @@ or nothing), and whether the flow rules and the agent instructions are one
 document or two.
 
 Then write it — this map carries execution.
+
+## Answer
+
+Resolved 2026-09-19. Two documents, split along the seam between shared rules and
+agent-only addenda, so nothing is stated twice and there is nothing to drift.
+
+**`CONTRIBUTING.md` is the single source of truth** for the flow rules: hook
+installation, the PR-only rule and its absent hotfix exception, branch naming,
+Conventional Commits, rebase-only history, branch cleanup, and the four required
+CI checks.
+
+Chosen over `AGENTS.md` and a new `docs/development.md` because the repo is
+public now and `CONTRIBUTING.md` is the one location GitHub actively surfaces —
+the Contribute sidebar and the pull request UI both link it, so a drive-by
+contributor finds it without being told. Putting the rules in `AGENTS.md` would
+optimise for agents, who follow a pointer reliably, at the expense of the
+audience who will not. A `docs/development.md` adds a hop for both and invents a
+location this repo does not use: `docs/` holds referenced material
+(`agents/`, and soon `adr/`), not primary docs.
+
+**`AGENTS.md` gains a `## Developer flow` section** carrying only what is
+genuinely agent-specific — work in a worktree, never merge to `main`, claim the
+`.scratch` ticket before starting, install hooks in a fresh worktree — plus an
+instruction to read `CONTRIBUTING.md` before the first commit. The pointer is
+phrased as an instruction rather than a footnote, because an agent skims a link
+it is not told to follow. This matches the file's existing convention of a short
+agent-facing summary plus a pointer to the detail.
+
+**The README pointer is deferred to ticket 05**, which already lists it. Adding a
+single link to a file that is still the generated Rails placeholder would be
+half an edit; the rewrite covers it.
