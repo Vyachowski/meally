@@ -1,12 +1,7 @@
 # frozen_string_literal: true
 
 module Overcommit::Hook::CommitMsg
-  # Rejects AI attribution in commit messages.
-  #
-  # The built-in MessageFormat check only inspects the subject line, so a
-  # trailer in the body passes it. The tool that wrote a commit is not
-  # information anyone needs from `git log`, and `git blame` already attributes
-  # the work to whoever committed it.
+  # MessageFormat only inspects the subject, so body trailers pass it.
   class NoAiAttribution < Base
     TOOLS = /claude|copilot|cursor|chatgpt|openai|gpt-\d|gemini|codex|devin|aider/i
 

@@ -1,8 +1,6 @@
 name: PR hygiene
 
-# The commit-msg hook in .git-hooks/ catches AI attribution in commit messages,
-# but hooks are per clone and cannot see a pull request body. This closes that
-# gap: it is a required check, so a body carrying attribution cannot be merged.
+# The commit-msg hook covers commit messages; hooks cannot see a PR body.
 
 on:
   pull_request:
@@ -17,9 +15,7 @@ jobs:
 
     steps:
       - name: Reject AI attribution in the pull request body
-        # The body goes through the environment rather than being interpolated
-        # into the script: it is attacker-controlled text and would otherwise be
-        # a shell injection.
+        # Via env, not interpolation: the body is attacker-controlled.
         env:
           BODY: ${{ github.event.pull_request.body }}
         run: |

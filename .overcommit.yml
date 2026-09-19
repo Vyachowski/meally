@@ -4,9 +4,7 @@
 # Rules: Conventional Commits — https://www.conventionalcommits.org/
 
 CommitMsg:
-  # Custom check in .git-hooks/commit_msg/. Rejects AI attribution: the
-  # built-in MessageFormat check below only inspects the subject line, so a
-  # trailer in the body slips past it.
+  # Custom check in .git-hooks/commit_msg/.
   NoAiAttribution:
     enabled: true
     required: true

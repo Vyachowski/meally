@@ -18,8 +18,11 @@ jobs:
         with:
           bundler-cache: true
 
+      # Flags match config/ci.rb. Known flake: brakeman sometimes dies in its
+      # own version check ("undefined method 'date' for nil") — rerun, the scan
+      # never started and it is not a finding.
       - name: Scan for common Rails security vulnerabilities using static analysis
-        run: bin/brakeman --no-pager
+        run: bin/brakeman --quiet --no-pager --exit-on-warn --exit-on-error
       
       - name: Scan for known security vulnerabilities in gems used
         run: bin/bundler-audit
@@ -116,6 +119,8 @@ jobs:
 #
 # To re-enable: write the first system test (the generator will create
 # application_system_test_case.rb for you), then uncomment the block below.
+# Bump the action pins first — Dependabot cannot see actions that appear only
+# inside a comment, so upload-artifact below is frozen.
 # -----------------------------------------------------------------------------
 
 #  system-test:
