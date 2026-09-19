@@ -108,6 +108,33 @@ git config pull.ff only       # a stale local main can never grow a merge commit
 A branch checked out in a git worktree cannot be deleted. Switch that worktree
 to another branch first, then delete.
 
+## Tests
+
+Minitest, which comes with Rails. Nothing is added to it.
+
+**Model and integration tests are the base.** An integration test walks the whole
+route → controller → HTML chain and still runs fast, which makes it the default
+choice. **Controller tests are not written** — Rails recommends integration tests
+in their place.
+
+**System tests (Capybara + Selenium) only where a real browser is genuinely
+required**, such as Turbo Stream behaviour. Expect a handful across the whole
+project, not a suite. There is no `system-test` job in CI yet; it returns
+alongside the first system test.
+
+**Fixtures, not FactoryBot.** They are already wired up (`fixtures :all`), they
+are Rails-native, and they load once inside a transaction. The known cost is
+real: as associations grow, the data spreads across YAML files and it stops being
+obvious where a record in a given test came from. Add a factory gem when that
+actually hurts, not in anticipation.
+
+**Test-first for models and calculations** — pure functions are naturally
+described by examples before they exist. **Test-after for controllers and views**,
+where the shape only settles once you see it.
+
+Tests run in parallel across your cores, each worker with its own database
+(`meally_test-0`, `meally_test-1`, …), so Postgres must be running.
+
 ## CI must be green
 
 Four jobs run on every pull request, and all four are required to merge:
