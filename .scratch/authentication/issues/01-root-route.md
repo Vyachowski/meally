@@ -23,11 +23,13 @@ summary that has not been designed.
 
 **Status:** ready-for-agent
 
-- [ ] `GET /` responds 200 and renders a page
-- [ ] Nothing in the controller, view or route refers to users, sessions or
+- [x] `GET /` responds 200 and renders a page
+- [x] Nothing in the controller, view or route refers to users, sessions or
       authentication
-- [ ] An integration test covers it, and CI reports the test actually ran
-- [ ] `bin/rubocop` is clean
+- [x] An integration test covers it, and CI reports the test actually ran
+- [x] `bin/rubocop` is clean
 
 Context: [`../spec.md`](../spec.md). Note for 02: the test written here asserts a
 200, which stops being true once authentication lands.
+
+Delivered by the home-page pull request, merged 2026-09-21.
