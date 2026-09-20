@@ -1,6 +1,6 @@
 # Authentication
 
-Status: ready-for-human
+Status: ready-for-agent
 
 Email and password sign-in, straight from the Rails generator, with everything we
 do not need deleted.
@@ -84,6 +84,32 @@ unauthenticated GET, the CVE-2015-9284 class.
 The shape it would take is unchanged and worth one line: OmniAuth does not
 replace the generator, it adds a second entry point into the same session,
 ending in the same `start_new_session_for`.
+
+## What the URLs end up being
+
+The generator routes a *singular* `resource :session` — the resource is "my
+current session", so signing in creates one and signing out deletes it. There is
+no `/login` and no `GET /logout`.
+
+| Path | Behind authentication? | What |
+|---|---|---|
+| `GET /` | yes | `home#index` |
+| `GET /session/new` | no | the sign-in form |
+| `POST /session` | no | sign in |
+| `DELETE /session` | yes | sign out |
+| `GET /up` | no | health check |
+
+Two public paths, and that is the whole of it. The mechanism is the reverse of
+what it looks like: the `Authentication` concern is included into
+`ApplicationController` and closes *everything*, then `SessionsController` opens
+itself back up with `allow_unauthenticated_access only: %i[new create]`.
+
+`/up` is unaffected because `Rails::HealthController` inherits from
+`ActionController::Base`, not from `ApplicationController` — checked, not
+assumed. Railway's health checks keep working once the app goes behind a login.
+
+Hitting `/` while signed out stores `/` in the session, redirects to
+`/session/new`, and returns there after a successful sign-in.
 
 ## Prerequisite: a root route must exist
 
