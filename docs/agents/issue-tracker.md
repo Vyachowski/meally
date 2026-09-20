@@ -42,6 +42,46 @@ instead:
 
 When a skill names a triage role, use the string from the second table verbatim.
 
+## When is a ticket finished
+
+There is deliberately no `done` value, and the two kinds of file answer this
+differently.
+
+**A wayfinder ticket** is finished at `Status: resolved` — the answer is under
+`## Answer` and the map's Decisions-so-far points at it.
+
+**Every other ticket** is finished when its **acceptance criteria are ticked**.
+`Status:` does not change. It is a triage role — who may take the work — not a
+record of whether the work is done, so a shipped ticket still reads
+`ready-for-agent`.
+
+Tick the boxes when the work is **merged**, not when it is written.
+
+## Ticket template
+
+One ticket per file. Criteria are the completion mechanism, so every ticket has
+them.
+
+```markdown
+# <NN> — <Title>
+
+**What to build:** the end-to-end behaviour this ticket makes work, from the
+user's perspective — not a layer-by-layer implementation list.
+
+**Blocked by:** the tickets that gate this one, or "None — can start immediately".
+
+**Status:** ready-for-agent
+
+- [ ] Acceptance criterion
+```
+
+Write each criterion as **observable behaviour**, so it can be checked without
+reading the implementation — "after signing in, the originally requested page is
+restored", not "the concern stores the return path".
+
+Keep file paths and code snippets out of tickets; they go stale. They belong in
+the effort's `spec.md`, which the ticket links to.
+
 ## When a skill says "publish to the issue tracker"
 
 Create a new file under `.scratch/<slug>/`, creating the directory if needed.
