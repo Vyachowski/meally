@@ -1,65 +1,110 @@
 # Authentication
 
-Status: needs-triage
+Status: ready-for-agent
 
-Sign in with Google, on top of the stock Rails session. Nothing of this exists in
-the codebase yet — there is no `User` and no `Session`, and
-`rails g authentication` has not been run.
+Email and password sign-in, straight from the Rails generator, with everything we
+do not need deleted.
 
-## Two layers that are easy to conflate
+Nothing exists yet: `app/` holds only the four `Application*` base classes,
+`db/migrate/` is empty, the schema is at `version: 0`, and `bcrypt` is
+commented out in the Gemfile.
 
-- **The Rails session** is where "this person is signed in" is stored.
-  `rails g authentication` generates `User`, `Session`, `Current` and an
-  `Authentication` concern: a signed cookie and session rotation.
-- **Google OAuth** is only a way to prove who someone is. It ends in the same
-  `start_new_session_for user` call as any other sign-in would.
+## What we build
 
-OmniAuth does not replace the generator. It adds a second entry point into the
-same session.
+`bin/rails generate authentication` produces all of it:
 
-## Google only, no passwords
+- models `User`, `Session`, `Current`
+- the `Authentication` concern, included into `ApplicationController`
+- `SessionsController` and its `new` view
+- routes `resource :session` and `resources :passwords`
+- migrations for `users` (`email_address`, `password_digest`) and `sessions`
+  (`user` reference, `ip_address`, `user_agent`)
+- uncomments `bcrypt` in the Gemfile and bundles
 
-For stages 0–1 there is no password sign-in at all. That means deleting part of
-what the generator produces: `PasswordsController`, the reset mailer with its
-views, and the matching routes.
+Then delete the parts we are not using, below.
 
-The gain is not just less code — with no passwords there is nothing to deliver by
-email, nothing to store, and nothing to leak.
+## What the generator gives for free
 
-## Gems
+Worth knowing so nobody reimplements it:
 
-| Gem | Version |
-|---|---|
-| `omniauth` | 2.1.4 |
-| `omniauth-google-oauth2` | 1.2.3 |
-| `omniauth-rails_csrf_protection` | 2.0.1 |
+- `rate_limit to: 10, within: 3.minutes` on session creation
+- `User.authenticate_by`, which resists timing-based account enumeration
+- `normalizes :email_address` — strips and downcases
+- sessions record `ip_address` and `user_agent`
+- `has_many :sessions, dependent: :destroy`, so deleting a user ends their sessions
 
-**The third is mandatory, not optional.** Without it the authorization path can
-be reached by an unauthenticated GET request — the vulnerability class of
-CVE-2015-9284.
+## What we delete, and why
 
-## Google-side setup
+### Registration — nothing to delete, nothing to write
 
-Brand verification is **not** needed: the `email` and `profile` scopes are
-non-sensitive. It becomes necessary only if we want our own name and logo on the
-consent screen.
+The generator does not create it. There is no `UsersController` and no sign-up
+view; only `resource :session` and `resources :passwords` are routed.
 
-`GOOGLE_CLIENT_ID` and `GOOGLE_CLIENT_SECRET` are environment variables — set in
-the Railway dashboard for production, in `.env` locally. Not in credentials; see
-[ADR-0002](../../docs/adr/0002-secrets-as-environment-variables.md).
+One user, created by hand. A sign-up form is code to validate, spam-protect and
+later remove, and it arrives with the first invited person — at which point it
+will also be clear whether it is open or invite-only. Too early to decide now.
 
-## Roles are deferred
+### Password reset — delete it
 
-No `admin:boolean`, no permission system. When it is needed — stage 2 — an enum
-`role` column on `User`.
+Remove `PasswordsController`, `PasswordsMailer`, its two views, and the
+`resources :passwords` route.
 
-## Open questions
+It cannot work here. No SMTP provider is configured and
+`config.action_mailer.default_url_options` is still `host: "example.com"`, so
+`create` would enqueue a job that fails and the link in the mail would point
+nowhere.
 
-These block nothing today, but must not be lost.
+**Deleting the controller does not remove the capability.**
+`has_secure_password` takes `reset_token: true` by default, so
+`user.password_reset_token` and `User.find_by_password_reset_token!` remain on
+the model either way. Recovery at this stage is one console line:
 
-- **There is no fallback sign-in.** Google-only means that losing access to the
-  Google account means losing access to Meally. To be decided at stage 2, before
-  the first paying user.
-- **The redirect URI is `localhost:3000`.** Railway needs a real domain, which is
-  still unchosen — the same open question that
-  [`docs/deployment.md`](../../docs/deployment.md) records.
+```ruby
+User.first.update!(password: "…")
+```
+
+Worth knowing what the deleted flow did, for when it comes back: it answered
+identically whether or not the address existed (enumeration protection), rate
+limited at 10 per 3 minutes, and destroyed every session of the user on
+successful reset. The file is in git history — restoring is cheaper than
+rewriting.
+
+### Google OAuth — dropped, not deferred
+
+Removed 2026-09-20. It was blocked regardless: the production redirect URI needs
+a domain, and the domain is undecided — see [ADR-0001](../../docs/adr/0001-deploy-to-railway.md)
+and [`docs/deployment.md`](../../docs/deployment.md).
+
+Planning it now is clutter. If it returns, the earlier plan is in git history:
+three pinned gems, the non-sensitive `email` and `profile` scopes meaning no
+brand verification is needed, and the note that `omniauth-rails_csrf_protection`
+is **mandatory** — without it the authorization path is reachable by an
+unauthenticated GET, the CVE-2015-9284 class.
+
+The shape it would take is unchanged and worth one line: OmniAuth does not
+replace the generator, it adds a second entry point into the same session,
+ending in the same `start_new_session_for`.
+
+## Prerequisite: a root route must exist
+
+`after_authentication_url` falls back to `root_url`, and `config/routes.rb` has
+root commented out (`# root "posts#index"`). **A successful login would raise
+`ActionController::UrlGenerationError`.**
+
+So a home page has to exist before sign-in works end to end. What goes on it is a
+product decision, not part of this spec — but authentication cannot be verified
+without it.
+
+## Open
+
+- **How the first user is created.** Console or `db/seeds.rb`. A seed must not
+  carry a password into git; if seeds are used it has to come from an
+  environment variable. Recommend the console at this stage — one user, once,
+  and nothing to leak.
+
+## Known cost
+
+If passwords are still here when other people arrive, password reset becomes
+mandatory the first time someone forgets one — and that means an SMTP provider,
+a real domain and `default_url_options`. This decision defers that bill, it does
+not cancel it.
