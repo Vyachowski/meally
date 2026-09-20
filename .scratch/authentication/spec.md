@@ -1,6 +1,6 @@
 # Authentication
 
-Status: ready-for-agent
+Status: ready-for-human
 
 Email and password sign-in, straight from the Rails generator, with everything we
 do not need deleted.
