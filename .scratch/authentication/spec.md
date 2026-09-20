@@ -121,6 +121,26 @@ So a home page has to exist before sign-in works end to end. What goes on it is 
 product decision, not part of this spec — but authentication cannot be verified
 without it.
 
+## Details that bite
+
+Three things the tickets deliberately leave to this file, because they are
+specific enough to go stale in a ticket but expensive to rediscover.
+
+**The generator over-routes.** It writes a bare `resource :session`, which routes
+six paths at a controller that defines three — `GET /session`,
+`GET /session/edit` and `PATCH /session` lead to actions that do not exist.
+Narrow it:
+
+```ruby
+resource :session, only: %i[ new create destroy ]
+```
+
+**Sign-out is a `DELETE`,** so the control is a `button_to`, not a `link_to`.
+
+**A user fixture needs a `password_digest`,** not a password. Build it with
+`BCrypt::Password.create` — writing a plain password into the YAML silently
+produces a user nobody can authenticate as.
+
 ## Open
 
 - **How the first user is created.** Console or `db/seeds.rb`. A seed must not
