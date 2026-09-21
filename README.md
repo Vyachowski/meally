@@ -15,16 +15,17 @@ Ruby comes from `.ruby-version` (3.4.10); any version manager that reads it will
 do. **Postgres runs in Docker, the application does not** — see below for why.
 
 ```sh
-cp .env.example .env     # then set DB_PASSWORD
 docker compose up -d     # Postgres 18 on localhost:5434
 bin/setup                # installs gems, prepares the database, starts the server
 ```
 
 After the first run, `bin/dev` starts the server on its own.
 
-`.env` is read by both Docker Compose and Rails (through `dotenv-rails`), so the
-database credentials have a single source. `DB_PASSWORD` has no default on
-purpose — a fallback here would also apply in production.
+There is nothing to configure first. The local database password is a literal
+shared by `compose.yaml` and `config/database.yml`, and it is not a secret: the
+container publishes its port to this machine only, and production connects
+through `DATABASE_URL` instead. Real secrets live in Rails credentials — see
+[ADR-0002](docs/adr/0002-secrets-in-rails-credentials.md).
 
 ### Why the app isn't in Docker
 
