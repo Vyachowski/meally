@@ -27,17 +27,25 @@ trusted in production first.
 encrypted files; the seed, the ignore rule and the documentation are ordinary
 work that can be done alongside.
 
-- [ ] Seeding an empty development database produces a user who can sign in
-- [ ] Seeding again changes nothing and raises nothing
-- [ ] The seed contains no password of its own, and neither does any tracked
+- [x] Seeding an empty development database produces a user who can sign in
+- [x] Seeding again changes nothing and raises nothing
+- [x] The seed contains no password of its own, and neither does any tracked
       file — the value is read from the encrypted store
-- [ ] A key file cannot be committed by accident, including the new one
-- [ ] The test suite still passes for someone holding no key at all
-- [ ] Production has its user, and the way it was created is documented well
+- [x] A key file cannot be committed by accident, including the new one
+- [x] The test suite still passes for someone holding no key at all
+- [x] Production has its user, and the way it was created is documented well
       enough to repeat
-- [ ] Signing in and signing out both work on production — carried from 02,
+- [x] Signing in and signing out both work on production — carried from 02,
       which had no user to prove it with
-- [ ] The authentication spec's Open item is marked closed and points here
+- [x] The authentication spec's Open item is marked closed and points here
 
 Context: [`../spec.md`](../spec.md) — see "Details that bite" for the ignore
 gap and the idempotence requirement.
+
+Delivered by pull requests #49, #50 and #51, merged 2026-09-21, and the
+production seed run on the same day. Signing in, reaching the home page,
+signing out and being closed out again were all walked against the live site.
+
+The documented command needed correcting after the fact: the platform rejects
+the project by name, and the connection needs a registered key and an accepted
+host fingerprint before it will run anything.
