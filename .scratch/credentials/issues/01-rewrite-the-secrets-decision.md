@@ -23,14 +23,18 @@ rather than a forgotten value.
 
 **Status:** ready-for-agent
 
-- [ ] The decision record states that secrets live in Rails credentials, in its
+- [x] The decision record states that secrets live in Rails credentials, in its
       own terms, without describing what was decided before
-- [ ] No additional record is created on the subject — the count of decision
+- [x] No additional record is created on the subject — the count of decision
       records does not grow
-- [ ] It lists which values remain environment variables, each with its reason
-- [ ] The obligation names the key files and what losing them costs
-- [ ] The deployment doc agrees with it — nothing there still says the master
+- [x] It lists which values remain environment variables, each with its reason
+- [x] The obligation names the key files and what losing them costs
+- [x] The deployment doc agrees with it — nothing there still says the master
       key is deliberately unset
-- [ ] Nothing in the application changes: the suite is green and CI passes
+- [x] Nothing in the application changes: the suite is green and CI passes
 
 Context: [`../spec.md`](../spec.md).
+
+Delivered by pull request #43, merged 2026-09-21. The deployment doc's variable
+table is deliberately untouched — the dashboard still holds the old variable,
+and ticket 02 changes both together.
