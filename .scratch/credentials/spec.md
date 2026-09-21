@@ -86,6 +86,11 @@ Find-or-create the user and update the password; never `create!` blindly.
 
 ## Decisions settled 2026-09-21
 
+- **The decision record is rewritten in place.** The existing one is overwritten
+  with the decision that holds today — no second record on the same subject, no
+  "superseded by" header, no account of what changed. A decision record states
+  what was decided, not the history of deciding it; git holds the rest. Keep it
+  short.
 - **The local database password is a tracked literal**, not a `.env` value — with
   the port mapping narrowed to localhost to earn it.
 - **Tests do not read credentials.** The fixture keeps its own password, so CI
