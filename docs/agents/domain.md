@@ -19,7 +19,7 @@ the code lives in `app/`:
 ├── CONTEXT.md          ← the glossary, not created yet
 ├── docs/adr/
 │   ├── 0001-deploy-to-railway.md
-│   ├── 0002-secrets-as-environment-variables.md
+│   ├── 0002-secrets-in-rails-credentials.md
 │   ├── 0003-derive-solid-database-urls.md
 │   └── 0004-no-css-framework.md
 └── app/

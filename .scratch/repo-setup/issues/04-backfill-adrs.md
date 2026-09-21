@@ -43,7 +43,7 @@ spec:
 | ADR | Decision | Dated |
 |---|---|---|
 | [0001](../../../docs/adr/0001-deploy-to-railway.md) | Deploy to Railway | 2026-09-06 |
-| [0002](../../../docs/adr/0002-secrets-as-environment-variables.md) | Secrets in environment variables, not credentials | 2026-09-06 |
+| [0002](../../../docs/adr/0002-secrets-in-rails-credentials.md) | Secrets in environment variables, not credentials | 2026-09-06 |
 | [0003](../../../docs/adr/0003-derive-solid-database-urls.md) | Derive the Solid database URLs from `DATABASE_URL` | 2026-09-07 |
 | [0004](../../../docs/adr/0004-no-css-framework.md) | No CSS framework | 2026-09-06 |
 

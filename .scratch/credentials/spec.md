@@ -4,7 +4,7 @@ Status: ready-for-agent
 
 Secrets move back to the Rails default: `config/credentials.yml.enc` unlocked by
 a master key, with the first user's email address and password among them. This
-reverses [ADR-0002](../../docs/adr/0002-secrets-as-environment-variables.md) and
+reverses [ADR-0002](../../docs/adr/0002-secrets-in-rails-credentials.md) and
 retires `.env` entirely.
 
 ## Why the reversal
