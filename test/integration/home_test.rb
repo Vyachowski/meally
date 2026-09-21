@@ -1,9 +1,9 @@
 require "test_helper"
 
 class HomeTest < ActionDispatch::IntegrationTest
-  # Ticket 02 adds authentication, at which point an unauthenticated GET /
-  # redirects to the sign-in form instead. This test has to sign in first then.
-  test "the home page renders" do
+  test "the home page renders for a signed-in user" do
+    sign_in_as users(:cook)
+
     get root_url
 
     assert_response :success
