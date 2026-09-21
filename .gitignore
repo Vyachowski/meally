@@ -31,9 +31,15 @@
 
 /public/assets
 
-# Ignore key files for decrypting credentials and more.
+# Ignore key files for decrypting credentials and more. The second line is not
+# covered by the first: per-environment keys sit one directory deeper.
 /config/*.key
+/config/credentials/*.key
 
 # Claude Code machine-local state (shared project config stays tracked).
 /.claude/worktrees/
 /.claude/settings.local.json
+
+# Ignore key files for decrypting credentials and more.
+/config/credentials/*.key
+

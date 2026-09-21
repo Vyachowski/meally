@@ -141,12 +141,13 @@ resource :session, only: %i[ new create destroy ]
 `BCrypt::Password.create` — writing a plain password into the YAML silently
 produces a user nobody can authenticate as.
 
-## Open
+## Settled
 
-- **How the first user is created.** Console or `db/seeds.rb`. A seed must not
-  carry a password into git; if seeds are used it has to come from an
-  environment variable. Recommend the console at this stage — one user, once,
-  and nothing to leak.
+- **How the first user is created.** `db/seeds.rb`, reading the address and
+  password from the credentials of the environment it runs in. The objection to
+  a seed was that it would carry a password into version control; credentials
+  remove it. See [`../credentials/spec.md`](../credentials/spec.md) and
+  [`docs/deployment.md`](../../docs/deployment.md#the-first-user).
 
 ## Known cost
 

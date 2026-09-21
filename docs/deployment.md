@@ -50,6 +50,36 @@ dies at the first cache write or enqueued job — the details and the three
 non-obvious constraints are in
 [ADR-0003](adr/0003-derive-solid-database-urls.md).
 
+## The first user
+
+There is no sign-up form. The application has one user, and it comes from the
+credentials of the environment it runs in — never from a password typed into a
+console. Put it there first:
+
+```sh
+bin/rails credentials:edit                              # production
+bin/rails credentials:edit --environment development    # your machine
+```
+
+```yaml
+user:
+  email_address: you@example.com
+  password: a long one
+```
+
+`db/seeds.rb` creates that user. Locally `bin/setup` runs it while preparing the
+database, and `bin/rails db:seed` runs it on its own. In production the database
+already exists, so the seed is run once inside the running container:
+
+```sh
+railway ssh --project meally --environment production --service Rails -- bin/rails db:seed
+```
+
+The first `railway ssh` asks to register an SSH key with Railway. The seed is
+idempotent — run it again and it prints that the user is already seeded, rather
+than failing or resetting anything. To change the password later, edit the
+credentials and run the seed again.
+
 ## Environments
 
 Two things that share a name and are easy to conflate:
