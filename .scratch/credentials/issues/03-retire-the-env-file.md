@@ -23,15 +23,25 @@ the suite still needs no key.
 
 **Status:** ready-for-agent
 
-- [ ] In a fresh clone, the database starts and the test suite passes with no
+- [x] In a fresh clone, the database starts and the test suite passes with no
       file created or copied first
-- [ ] The development database refuses connections from any other machine on the
+- [x] The development database refuses connections from any other machine on the
       network
-- [ ] No tracked document tells a reader to create or copy an environment file
-- [ ] Nothing in the application loads an environment file, and the gem that did
+- [x] No tracked document tells a reader to create or copy an environment file
+- [x] Nothing in the application loads an environment file, and the gem that did
       is gone from the dependency list
-- [ ] CI is green without a new secret
-- [ ] The deployed application is unaffected — its variables are untouched
+- [x] CI is green without a new secret
+- [x] The deployed application is unaffected — its variables are untouched
 
 Context: [`../spec.md`](../spec.md) — see "The local database password is not a
 secret" for why an open literal is acceptable and what makes it so.
+
+Delivered by pull request #47, merged 2026-09-21. Verified in a fresh worktree
+holding no environment file: the container came up, both databases were created
+and the suite passed, with nothing copied first.
+
+One thing worth knowing for any checkout that predates this: the container's
+password is only applied when its volume is first created, so an existing
+development database keeps the password it was born with and rejects the new
+literal until the role is altered in place. Recreating the volume works too, at
+the cost of the development data.
