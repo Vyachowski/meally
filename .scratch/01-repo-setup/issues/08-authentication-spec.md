@@ -9,7 +9,7 @@ Map: ../map.md
 
 Section 4 of `dev-docs/spec.md` plans authentication for work that has not
 started — there is no `User` and no `Session` in `app/` today. Ticket 03 routes
-it to `.scratch/authentication/spec.md`, the repo's own convention for a feature
+it to `.scratch/02-authentication/spec.md`, the repo's own convention for a feature
 spec per `docs/agents/issue-tracker.md`.
 
 Translate it into English and write it there. What it carries:
@@ -45,7 +45,7 @@ ADR.
 
 ## Answer
 
-Resolved 2026-09-19. Written to `.scratch/authentication/spec.md`, in English,
+Resolved 2026-09-19. Written to `.scratch/02-authentication/spec.md`, in English,
 carrying `Status: needs-triage` per the repo's triage convention.
 
 Everything from spec section 4 survives: the two-layers distinction between the

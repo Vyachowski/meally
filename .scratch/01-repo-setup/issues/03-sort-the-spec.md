@@ -66,7 +66,7 @@ The map's Notes claimed otherwise and have been corrected.
 | 1 | Railway variables table, `PORT=80` / Thruster | `docs/deployment.md` |
 | 2 | `RAILS_ENV` vs Railway environment; no staging yet | `docs/deployment.md` |
 | 3 | Docker for services, app on the host | README, with a short why |
-| 4 | Google OAuth plan, gems, CVE note, open items | `.scratch/authentication/spec.md` |
+| 4 | Google OAuth plan, gems, CVE note, open items | `.scratch/02-authentication/spec.md` |
 | 5 | Domain model — undecided | discard |
 | 6 | No CSS framework, four alternatives rejected | ADR-0004 |
 | 7 | Minitest, fixtures over FactoryBot, test-first | `CONTRIBUTING.md` + README |
@@ -78,7 +78,7 @@ The map's Notes claimed otherwise and have been corrected.
   variables table and a Thruster port explanation are what you consult when
   something breaks; the README should stay short enough to be read end to end.
   Its job is "run this locally", with deployment one link away.
-- **Authentication goes to `.scratch/authentication/spec.md`**, the repo's own
+- **Authentication goes to `.scratch/02-authentication/spec.md`**, the repo's own
   convention for a feature spec per `docs/agents/issue-tracker.md`. It is not a
   decision record — nothing was decided by building it — and not documentation,
   since there is nothing yet to document. It is the next feature's spec, and it

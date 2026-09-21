@@ -8,7 +8,7 @@ Map: ../map.md
 ## Question
 
 Once tickets 04 and 05 have drained `dev-docs/spec.md` into ADRs, the README,
-`docs/deployment.md` and `.scratch/authentication/spec.md`, retire the directory:
+`docs/deployment.md` and `.scratch/02-authentication/spec.md`, retire the directory:
 
 1. **Confirm nothing is left behind.** Walk the sort table in ticket 03 and check
    each row actually landed somewhere — the ADRs from 04, the README and
@@ -44,8 +44,8 @@ spec's distinctive facts was traced to a tracked file rather than assumed:
 | 128-hex `SECRET_KEY_BASE` | `docs/deployment.md` |
 | `TARGET_PORT` / Thruster | `docs/deployment.md` |
 | `meally_production_cache` | ADR-0003 |
-| CVE-2015-9284 | `.scratch/authentication/spec.md` |
-| `omniauth-rails_csrf_protection` | `.scratch/authentication/spec.md` |
+| CVE-2015-9284 | `.scratch/02-authentication/spec.md` |
+| `omniauth-rails_csrf_protection` | `.scratch/02-authentication/spec.md` |
 | ~800-line retreat threshold | ADR-0004 |
 | Bootstrap's 226 KB | ADR-0004 |
 | FactoryBot's known cost | `CONTRIBUTING.md` |
