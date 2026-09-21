@@ -21,6 +21,10 @@ bin/setup                # installs gems, prepares the database, starts the serv
 
 After the first run, `bin/dev` starts the server on its own.
 
+Signing in needs a user, and there is no sign-up form: add one to the
+development credentials and `bin/setup` seeds it for you — see
+[the deployment doc](docs/deployment.md#the-first-user).
+
 There is nothing to configure first. The local database password is a literal
 shared by `compose.yaml` and `config/database.yml`, and it is not a secret: the
 container publishes its port to this machine only, and production connects
