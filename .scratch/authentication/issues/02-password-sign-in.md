@@ -25,14 +25,18 @@ hand-made `DELETE`.
 
 **Status:** ready-for-agent
 
-- [ ] Signing in with the correct password reaches the home page
-- [ ] Signing in with a wrong password reports it and starts no session
-- [ ] An unauthenticated request to any page lands on the sign-in form
-- [ ] After signing in, the originally requested page is restored — not the home
+- [x] Signing in with the correct password reaches the home page
+- [x] Signing in with a wrong password reports it and starts no session
+- [x] An unauthenticated request to any page lands on the sign-in form
+- [x] After signing in, the originally requested page is restored — not the home
       page
-- [ ] A sign-out control ends the session and returns to the sign-in form
-- [ ] No route resolves to an action that does not exist
-- [ ] Nothing that needs mail delivery remains
-- [ ] No password appears in the repository, including seeds and fixtures
-- [ ] The home page test from 01 is updated — it now signs in first
-- [ ] `bin/rubocop` is clean and CI is green
+- [x] A sign-out control ends the session and returns to the sign-in form
+- [x] No route resolves to an action that does not exist
+- [x] Nothing that needs mail delivery remains
+- [x] No password appears in the repository, including seeds and fixtures
+- [x] The home page test from 01 is updated — it now signs in first
+- [x] `bin/rubocop` is clean and CI is green
+
+Delivered by pull request #40, merged 2026-09-21. The first user is still
+created by hand — the spec's one Open item, and its own ticket: credentials
+from environment variables, and a move back to the master key at the same time.
