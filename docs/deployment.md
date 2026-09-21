@@ -13,18 +13,16 @@ Railway environment variables regardless; set those in the Railway dashboard.
 
 | Variable | Value |
 |---|---|
-| `SECRET_KEY_BASE` | `bin/rails secret` output, 128 hex characters. Set once |
+| `RAILS_MASTER_KEY` | the contents of `config/master.key`, 32 hex characters |
 | `DATABASE_URL` | `${{ Postgres.DATABASE_URL }}` — a reference, not a copy |
 | `PORT` | `80` — see below |
-| `GOOGLE_CLIENT_ID` / `GOOGLE_CLIENT_SECRET` | once OAuth exists |
 
-The dashboard still holds `SECRET_KEY_BASE` rather than `RAILS_MASTER_KEY`.
-Switching it over is its own piece of work, because the key has to carry the
-secret production is already signing cookies with.
+Three, and that is all of them. Everything else the application needs is in
+`config/credentials.yml.enc`, which the master key opens.
 
-> **Keep a copy in a password manager** of every value here and of
-> `config/master.key`. The variables exist only in the Railway dashboard, and
-> the key file is gitignored — there is no third copy of either.
+> **Keep a copy of `config/master.key` in a password manager.** The file is
+> gitignored and Railway hides the value once saved, so those two copies are the
+> only ones that exist. Lose both and the encrypted file is unreadable.
 
 `DATABASE_URL` must be a reference variable rather than a pasted string, so the
 app follows the database when its credentials change. It is also **mandatory**:
