@@ -72,13 +72,18 @@ database, and `bin/rails db:seed` runs it on its own. In production the database
 already exists, so the seed is run once inside the running container:
 
 ```sh
-railway ssh --project meally --environment production --service Rails -- bin/rails db:seed
+railway ssh keys add    # once per machine — Railway will not let you in without one
+railway link            # once per checkout — pick meally, production, Rails
+railway ssh -- bin/rails db:seed
 ```
 
-The first `railway ssh` asks to register an SSH key with Railway. The seed is
-idempotent — run it again and it prints that the user is already seeded, rather
-than failing or resetting anything. To change the password later, edit the
-credentials and run the seed again.
+The first connection asks you to accept the fingerprint of `ssh.railway.com`.
+Passing `--project` by name is rejected; link the checkout, or pass the
+project's id.
+
+The seed is idempotent — run it again and it prints that the user is already
+seeded, rather than failing or resetting anything. To change the password later,
+edit the credentials and run the seed again.
 
 ## Environments
 

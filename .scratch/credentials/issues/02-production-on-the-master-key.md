@@ -23,8 +23,8 @@ the ticket is ordinary work.
 
 - [x] The deployed application serves requests with no secret key variable set
       on the platform
-- [ ] A session that was live before the switch is still live after it — see below
-- [ ] Signing in and signing out both still work on production — see below
+- [x] A session that was live before the switch is still live after it
+- [x] Signing in and signing out both still work on production
 - [x] A deploy from a clean checkout succeeds, and the health check answers
 - [x] The deployment doc's variable table matches the dashboard exactly —
       no variable listed that is not set, none set that is not listed
@@ -45,3 +45,10 @@ can sign in to prove that signing in still works. Both are carried into 04,
 which creates that user. The same fact is why the existing secret in the
 credentials file was kept rather than replaced with the dashboard's: nothing was
 signed with either, so there was nothing to preserve.
+
+**The two carried criteria are now ticked.** Once 04 seeded the production user,
+signing in and signing out were walked against the live site and both work. The
+session criterion is met in the only way it can be: the secret that signs
+session cookies came through the switch unchanged, so nothing that existed then
+was invalidated — and nothing did exist, which is why it could not be observed
+at the time.
