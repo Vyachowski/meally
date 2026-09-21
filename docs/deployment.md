@@ -7,9 +7,9 @@ Railway service. The reasoning is in
 
 ## Environment variables
 
-Production secrets are Railway environment variables, not Rails credentials — see
-[ADR-0002](adr/0002-secrets-as-environment-variables.md). Set them in the Railway
-dashboard.
+Production secrets live in Rails credentials — see
+[ADR-0002](adr/0002-secrets-in-rails-credentials.md). A few values have to be
+Railway environment variables regardless; set those in the Railway dashboard.
 
 | Variable | Value |
 |---|---|
@@ -18,11 +18,13 @@ dashboard.
 | `PORT` | `80` — see below |
 | `GOOGLE_CLIENT_ID` / `GOOGLE_CLIENT_SECRET` | once OAuth exists |
 
-`RAILS_MASTER_KEY` is **not** set and is not needed.
+The dashboard still holds `SECRET_KEY_BASE` rather than `RAILS_MASTER_KEY`.
+Switching it over is its own piece of work, because the key has to carry the
+secret production is already signing cookies with.
 
-> **Keep a copy of every value in a password manager.** They exist only in the
-> Railway dashboard; losing access to the account otherwise means losing the
-> secrets.
+> **Keep a copy in a password manager** of every value here and of
+> `config/master.key`. The variables exist only in the Railway dashboard, and
+> the key file is gitignored — there is no third copy of either.
 
 `DATABASE_URL` must be a reference variable rather than a pasted string, so the
 app follows the database when its credentials change. It is also **mandatory**:
