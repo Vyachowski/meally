@@ -1,4 +1,9 @@
 module SessionTestHelper
+  # The fixture stores the bcrypt digest of this; a test that posts the
+  # sign-in form needs the password itself. One definition, so the two
+  # cannot drift apart.
+  TEST_PASSWORD = "a-test-only-password"
+
   def sign_in_as(user)
     Current.session = user.sessions.create!
 

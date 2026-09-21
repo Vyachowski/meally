@@ -1,9 +1,9 @@
-<% password_digest = BCrypt::Password.create("password") %>
+# The fixture stores a bcrypt digest, never a password: a plain password here
+# silently produces a user nobody can authenticate as. The password itself is
+# SessionTestHelper::TEST_PASSWORD, and it authenticates nothing outside the
+# test suite.
+<% password_digest = BCrypt::Password.create(SessionTestHelper::TEST_PASSWORD) %>
 
-one:
-  email_address: one@example.com
-  password_digest: <%= password_digest %>
-
-two:
-  email_address: two@example.com
+cook:
+  email_address: cook@example.com
   password_digest: <%= password_digest %>
