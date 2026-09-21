@@ -35,6 +35,8 @@ work that can be done alongside.
 - [ ] The test suite still passes for someone holding no key at all
 - [ ] Production has its user, and the way it was created is documented well
       enough to repeat
+- [ ] Signing in and signing out both work on production — carried from 02,
+      which had no user to prove it with
 - [ ] The authentication spec's Open item is marked closed and points here
 
 Context: [`../spec.md`](../spec.md) — see "Details that bite" for the ignore
