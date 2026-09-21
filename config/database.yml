@@ -25,8 +25,9 @@ default: &default
   host: <%= ENV.fetch("DB_HOST", "localhost") %>
   port: <%= ENV.fetch("DB_PORT", 5434) %>
   username: <%= ENV.fetch("DB_USER", "postgres") %>
-  # No default on purpose: a fallback password would also apply to production.
-  password: <%= ENV["DB_PASSWORD"] %>
+  # The same literal compose.yaml starts Postgres with. Overridden in production
+  # by DATABASE_URL, which Rails merges over this file.
+  password: <%= ENV.fetch("DB_PASSWORD", "meally_development") %>
 
 development:
   <<: *default

@@ -5,9 +5,14 @@ services:
       - postgres_data:/var/lib/postgresql
     environment:
       POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: ${DB_PASSWORD:?set DB_PASSWORD in .env, see .env.example}
+      # Not a secret: this database holds development data and the mapping below
+      # publishes it to this machine only. Production never reads it — Railway
+      # supplies DATABASE_URL, which overrides the whole block in database.yml.
+      POSTGRES_PASSWORD: meally_development
     ports:
-      - "${DB_PORT:-5434}:5432"
+      # 127.0.0.1 on purpose. A bare "5434:5432" binds every interface, which
+      # puts a database with a published password on the local network.
+      - "127.0.0.1:5434:5432"
 
 volumes:
   postgres_data:

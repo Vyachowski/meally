@@ -172,7 +172,6 @@ bin/rubocop
 bin/rails test
 ```
 
-`docker compose` needs `DB_PASSWORD` set in `.env`; see `.env.example`.
 
 ### `bin/ci` is not used
 
