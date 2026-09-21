@@ -7,7 +7,7 @@ error. Production gets its user the same way, and how that was run is written
 down so the next person does not have to invent it.
 
 This closes the one Open item left by the authentication spec — see
-[`../../authentication/spec.md`](../../authentication/spec.md), which recommended
+[`../../02-authentication/spec.md`](../../02-authentication/spec.md), which recommended
 the console precisely because a seed would have carried a password into git.
 Reading the value from credentials removes that objection.
 

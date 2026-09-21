@@ -146,7 +146,7 @@ produces a user nobody can authenticate as.
 - **How the first user is created.** `db/seeds.rb`, reading the address and
   password from the credentials of the environment it runs in. The objection to
   a seed was that it would carry a password into version control; credentials
-  remove it. See [`../credentials/spec.md`](../credentials/spec.md) and
+  remove it. See [`../03-credentials/spec.md`](../03-credentials/spec.md) and
   [`docs/deployment.md`](../../docs/deployment.md#the-first-user).
 
 ## Known cost

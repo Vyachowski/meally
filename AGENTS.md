@@ -31,7 +31,7 @@ These additional rules apply to agents only:
 
 ### Issue tracker
 
-Issues and specs live as markdown files under `.scratch/<slug>/` in this repo — there is no external tracker in use.
+Issues and specs live as markdown files under `.scratch/<NN>-<slug>/` in this repo — there is no external tracker in use. Effort directories are numbered in the order they started, so the listing reads as a timeline; a new one takes the next free number.
 
 Every file carries a `Status:` line, and **it means two different things depending on the file**: wayfinder tickets use a lifecycle (`open` / `claimed` / `resolved`), while specs and ordinary issues use a triage role (`needs-triage`, `needs-info`, `ready-for-agent`, `ready-for-human`, `wontfix`). See `docs/agents/issue-tracker.md` for which applies where.
 

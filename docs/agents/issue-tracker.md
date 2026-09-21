@@ -5,15 +5,25 @@ external tracker.
 
 ## Conventions
 
-- One effort per directory: `.scratch/<slug>/`
-- The spec is `.scratch/<slug>/spec.md`
-- Tickets are one file each at `.scratch/<slug>/issues/<NN>-<slug>.md`, numbered
-  from `01` — never a single combined tickets file
+- One effort per directory: `.scratch/<NN>-<slug>/`, numbered from `01`
+- The spec is `.scratch/<NN>-<slug>/spec.md`
+- Tickets are one file each at `.scratch/<NN>-<slug>/issues/<NN>-<slug>.md`,
+  numbered from `01` — never a single combined tickets file
 - Comments and conversation history append to the bottom of the file under a
   `## Comments` heading
 - When work comes from a ticket, the branch carries its number:
   `docs/02-flow-doc-location`. See [`CONTRIBUTING.md`](../../CONTRIBUTING.md) for
   the branch, commit, and pull request rules themselves.
+
+## Efforts are numbered in the order they started
+
+The number on an effort directory is chronological, not a priority: `01` is what
+this project worked on first. A new effort takes the next free number, and
+numbers are never reused or reshuffled afterwards — a directory listing is meant
+to read as the timeline of the project, oldest first.
+
+Ticket numbers inside an effort work the same way, except they are also
+dependency order: blockers come first.
 
 ## `Status:` — two vocabularies, and which is which
 
@@ -84,7 +94,8 @@ the effort's `spec.md`, which the ticket links to.
 
 ## When a skill says "publish to the issue tracker"
 
-Create a new file under `.scratch/<slug>/`, creating the directory if needed.
+Create a new file under `.scratch/<NN>-<slug>/`, creating the directory if
+needed — the next free number.
 
 ## When a skill says "fetch the relevant ticket"
 
@@ -95,9 +106,9 @@ ticket number directly.
 
 Used by `/wayfinder`. The **map** is a file with one **child** file per ticket.
 
-- **Map**: `.scratch/<effort>/map.md` — the Destination / Notes /
+- **Map**: `.scratch/<NN>-<effort>/map.md` — the Destination / Notes /
   Decisions-so-far / Not-yet-specified / Out-of-scope body.
-- **Child ticket**: `.scratch/<effort>/issues/NN-<slug>.md`, numbered from `01`,
+- **Child ticket**: `.scratch/<NN>-<effort>/issues/NN-<slug>.md`, numbered from `01`,
   with the question in the body. A `Type:` line records the ticket type
   (`research` / `prototype` / `grilling` / `task`); the `Status:` line uses the
   lifecycle vocabulary above.
