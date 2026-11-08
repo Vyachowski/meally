@@ -27,6 +27,15 @@ These additional rules apply to agents only:
   repository's rule wins, and both are enforced mechanically, so a commit or
   pull request carrying one will simply be rejected.
 
+## Roadmap and tasks
+
+The roadmap and tasks live in the Obsidian vault at `/Users/slava/Library/Mobile Documents/iCloud~md~obsidian/Documents/Life`, not in this repo. This project is `Projects/meally`.
+
+- Stages and features: `Projects/meally/README.md`. Its `stage` property is the current stage.
+- Tasks of the current stage: `Home.md`, section `Активные проекты`, list `Задачи этапа`. The top open task is next.
+- Read both before planning. When a task or stage is done, tick it there.
+- The vault has its own rules: read its `AGENTS.md` before editing. Vault text is in Russian.
+
 ## Agent skills
 
 ### Issue tracker
